@@ -166,7 +166,7 @@ export const selectSortedJobs = (sortBy) => async (dispatch, getState) => {
 export const fetchSingleJob = (id) => async (dispatch) => {
   try {
     dispatch(jobSlice.actions.requestForSingleJob())
-    const jobs_db_response = await axios.get(`job/${id}`, { withCredentials: true })
+    const jobs_db_response = await axios.get(`/job/${id}`, { withCredentials: true })
     dispatch(jobSlice.actions.successForSingleJob(jobs_db_response.data.data))
   } catch (err) {
     if (err.message === "Network Error") {
@@ -183,7 +183,7 @@ export const fetchSingleJob = (id) => async (dispatch) => {
 export const fetchMyJob = () => async (dispatch) => {
   try {
     dispatch(jobSlice.actions.requestForMyJobs())
-    let link = "job/myjobs"
+    let link = "/job/myjobs"
     const jobs_db_response = await axios.get(link, { withCredentials: true })
     dispatch(jobSlice.actions.successForMyJobs(jobs_db_response.data.data))
   } catch (err) {
@@ -200,7 +200,7 @@ export const fetchMyJob = () => async (dispatch) => {
 export const postJob = (data) => async (dispatch) => {
   try {
     dispatch(jobSlice.actions.requestForPostJob())
-    let link = "job/newjob"
+    let link = "/job/newjob"
     const jobs_db_response = await axios.post(link, data, { withCredentials: true })
     dispatch(jobSlice.actions.successForPostJob())
   } catch (err) {

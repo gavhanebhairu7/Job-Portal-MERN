@@ -50,7 +50,7 @@ const updateProfileSlice = createSlice({
 export const updateProfile = (data) => async (dispatch) => {
   dispatch(updateProfileSlice.actions.updateProfileRequest())
   try {
-    const response = await axios.put(`user/update/profile`, data, {
+    const response = await axios.put(`/user/update/profile`, data, {
       withCredentials: true,
       headers: { "Content-Type": "multipart/form-data" },
     })

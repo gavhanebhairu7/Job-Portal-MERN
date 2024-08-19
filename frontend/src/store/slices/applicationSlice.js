@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
+let baseURL = import.meta.env.VITE_BASE_URL
+
+axios.defaults.baseURL = `${baseURL}`
 
 const appSlice = createSlice({
   name: "applications",
@@ -100,7 +103,7 @@ const appSlice = createSlice({
 export const postApplication = (id, data) => async (dispatch) => {
   dispatch(appSlice.actions.postAapplicationRequest)
   try {
-    const server_response = await axios.post(`application/apply/${id}`, data, {
+    const server_response = await axios.post(`/application/apply/${id}`, data, {
       withCredentials: true,
       headers: { "Content-Type": "multipart/form-data" },
     })
