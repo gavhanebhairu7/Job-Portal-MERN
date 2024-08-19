@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { useSelector } from "react-redux"
-let baseURL = await import.meta.env.VITE_BASE_URL
+let baseURL = import.meta.env.VITE_BASE_URL
 
 axios.defaults.baseURL = `${baseURL}`
 
