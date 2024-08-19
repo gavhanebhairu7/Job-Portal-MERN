@@ -4,7 +4,7 @@ import { ErrorHandler } from "./error.js"
 import jwt from "jsonwebtoken"
 const isAuthentic = catchAsyncErrors(async function (req, res, next) {
   const { token } = req.cookies
-  console.log("cookies: ", cookies)
+  console.log("cookies: ", req.cookies)
   console.log("token: ", token)
   if (!token) {
     return next(new ErrorHandler("User is not authenticated", 400))
