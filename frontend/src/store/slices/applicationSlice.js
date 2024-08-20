@@ -124,7 +124,7 @@ export const getEmployerApplication =
   async (dispatch) => {
     dispatch(appSlice.actions.getEmployerApplicationRequest)
     try {
-      let link = "/emp/applications?"
+      let link = "/application/emp/applications?"
       let queryParams = []
       if (status) queryParams.push(`status=${status}`)
       if (id) queryParams.push(`jobId=${id}`)
@@ -151,7 +151,7 @@ export const replyEmployerApplication =
       if (!id) {
         return
       }
-      let link = `/${id}?`
+      let link = `/application/${id}?`
       if (status === "approve") link += `approve=true`
       else if (status === "reject") link += "approve=false"
 
@@ -176,7 +176,7 @@ export const replyEmployerApplication =
 export const getSeekerApplications = () => async (dispatch) => {
   dispatch(appSlice.actions.getSeekerApplicationRequest)
   try {
-    let link = "/myapplications"
+    let link = "/application/myapplications"
     const server_response = await axios.get(link, {
       withCredentials: true,
     })
@@ -193,9 +193,9 @@ export const getSeekerApplications = () => async (dispatch) => {
 }
 
 export const deleteSeekerApplication = (appId) => async (dispatch) => {
-  dispatch(appSlice.actions.deleteSeekerApplicationRequest)
+  dispatch(appSlice.actions.deleteSeekerApplicationRequest())
   try {
-    let link = `/${appId}`
+    let link = `/application/${appId}`
     const server_response = await axios.delete(link, {
       withCredentials: true,
     })

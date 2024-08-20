@@ -14,7 +14,7 @@ export const Jobs = () => {
   const [selectedCities, setSelectedCities] = useState("")
   const [searchKeyword, setSearchKeyword] = useState("")
   const [sortBy, setSortBy] = useState("")
-  const { error, loading, job } = useSelector((state) => state.jobs)
+  const { error, loading, job, niches, cities } = useSelector((state) => state.jobs)
   const dispatch = useDispatch()
 
   const handleCityChange = (city) => {
@@ -50,10 +50,6 @@ export const Jobs = () => {
     dispatch(selectSortedJobs(criteria))
   }
 
-  const cities = ["pune", "mumbai", "nagpur", "delhi", "hyderabad", "kolkata", "chennai", "benguluru", "ahmedabad"]
-
-  const niches = ["Web development", "Android development", "Software developer", "Frontend developer", "Backend developer"]
-
   return (
     <>
       {loading && <Spinner />}
@@ -77,7 +73,7 @@ export const Jobs = () => {
           <div className="filter-bar">
             <div className="cities">
               <div className="sort-container">
-                <div style={{ color: "#001df9" }}>
+                <div style={{ color: "black" }}>
                   <MdOutlineSort />
                   Sort By:
                 </div>
@@ -86,6 +82,7 @@ export const Jobs = () => {
                   id="sort"
                   value={sortBy}
                   className="sort-button"
+                  style={{ color: "blue" }}
                   onChange={(e) => handleSort(e.target.value)}>
                   <option value="default">default</option>
                   <option value="salary">salary</option>
@@ -160,6 +157,26 @@ export const Jobs = () => {
                   </option>
                 ))}
               </select>
+
+              <div className="sort-container">
+                <div style={{ color: "black" }}>
+                  <MdOutlineSort />
+                  Sort By:
+                </div>
+                <select
+                  name="sort"
+                  id="sort"
+                  value={sortBy}
+                  className="sort-button"
+                  style={{ color: "blue" }}
+                  onChange={(e) => handleSort(e.target.value)}>
+                  <option value="default">default</option>
+                  <option value="salary">salary</option>
+                  <option value="position">positions</option>
+                  <option value="posted-latest">posted-latest</option>
+                  <option value="posted-earliest">posted-earliest</option>
+                </select>
+              </div>
             </div>
             <div className="jobs_container">
               {job &&
