@@ -78,7 +78,7 @@ const logout = catchAsynchronousErr(async (req, res, next) => {
   if (!token) {
     return next(new ErrorHandler("No active session", 400))
   }
-  return res.status(201).cookie("token", "", { httpOnly: true, expires: new Date() }).json({
+  return res.status(201).cookie("token", token, { httpOnly: true, expires: new Date(), secure: true, sameSite: "None" }).json({
     success: true,
     message: "user logged out successfully",
   })
