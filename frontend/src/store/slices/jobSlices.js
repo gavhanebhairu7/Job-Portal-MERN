@@ -98,6 +98,11 @@ const jobSlice = createSlice({
       state.error = action.payload
     },
 
+    successForDeleteJob(state, action) {
+      state.loading = false
+      state.message = action.payload
+    },
+
     clearAllError(state, action) {
       state.error = null
       state.job = state.job
@@ -105,6 +110,7 @@ const jobSlice = createSlice({
     resetJobSlice(state, action) {
       state.error = null
       state.job = state.job
+      state.message = null
       state.loading = false
       state.myJobs = state.myJobs
       state.singleJob = {}
@@ -203,6 +209,21 @@ export const postJob = (data) => async (dispatch) => {
     let link = "/job/newjob"
     const jobs_db_response = await axios.post(link, data, { withCredentials: true })
     dispatch(jobSlice.actions.successForPostJob())
+  } catch (err) {
+    if (err.request) {
+      console.log("cannot send request")
+      dispatch(jobSlice.actions.failureForPostJob("failed to send request"))
+    }
+    dispatch(jobSlice.actions.failureForPostJob(err?.response?.data?.message))
+    console.log("jobSlice:: fetchjob error:response ", err)
+  }
+}
+
+export const deleteJob = (data) => async (dispatch) => {
+  try {
+    dispatch(jobSlice.actions.requestForAllJobs())
+    const server_response = await axios.delete(`/job/${data}`, { withCredentials: true })
+    dispatch(jobSlice.actions.successForDeleteJob(server_response.data.message))
   } catch (err) {
     if (err.request) {
       console.log("cannot send request")

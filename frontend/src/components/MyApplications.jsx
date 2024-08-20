@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 import Spinner from "./Spinner"
 import { deleteSeekerApplication } from "../store/slices/applicationSlice"
 import { toast } from "react-toastify"
+import { FcApproval } from "react-icons/fc"
+import { FaTimesCircle } from "react-icons/fa"
 const MyApplications = () => {
   const { myApplications, loading, error, message } = useSelector((state) => state.applications)
   const dispatch = useDispatch()
@@ -55,7 +57,21 @@ const MyApplications = () => {
                       <span>Job Id:</span> {element.jobInfo.jobId}
                     </p>
                     <p className="sub-sec">
-                      <span>Name</span> {element.applicantInfo.name}
+                      <span>Status:</span>
+                      {element.status == "Approved" ? (
+                        <>
+                          Approved <FcApproval />
+                        </>
+                      ) : element.status == "Rejected" ? (
+                        <>
+                          Rejected <FaTimesCircle style={{ color: "red", opacity: "0.7" }} />
+                        </>
+                      ) : (
+                        "Pending"
+                      )}
+                    </p>
+                    <p className="sub-sec">
+                      <span> Company Name</span> {element.applicantInfo.companyName}
                     </p>
                     <p className="sub-sec">
                       <span>Email</span> {element.applicantInfo.email}
@@ -73,10 +89,16 @@ const MyApplications = () => {
                         rows={5}
                         disabled></textarea>
                     </p>
+                    <Link
+                      to={`/post/application/job/${element.jobInfo.jobId}`}
+                      target="_blank">
+                      view Details
+                    </Link>
                     <div className="btn-wrapper">
                       <button
                         className="outline_btn"
-                        onClick={() => handleDeleteApplication(element._id)}>
+                        onClick={() => handleDeleteApplication(element._id)}
+                        disabled={element.status == "Approved"}>
                         Delete Application
                       </button>
                       <Link

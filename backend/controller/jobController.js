@@ -124,7 +124,7 @@ const deleteJobById = catchAsynchronousErr(async (req, res, next) => {
       message: "No data found !",
     })
   }
-  if (db_response.jobPostedBy !== req.user._id) {
+  if (!db_response.jobPostedBy.equals(req.user._id)) {
     return next(new ErrorHandler("you are not authorised to delete this job", 400))
   }
   db_response = await Job.deleteOne({ _id: id })

@@ -2,14 +2,31 @@ import React, { useDebugValue, useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { useNavigate, Link } from "react-router-dom"
 import Spinner from "./Spinner"
-import { fetchMyJob } from "../store/slices/jobSlices"
+import { toast } from "react-toastify"
+import { clearAllJobErrors, deleteJob, fetchMyJob, resetJobSlice } from "../store/slices/jobSlices"
 const MyJobs = () => {
-  const { myJobs, loading } = useSelector((state) => state.jobs)
+  const { myJobs, loading, error, message } = useSelector((state) => state.jobs)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchMyJob())
   }, [])
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error)
+      dispatch(clearAllJobErrors())
+      return
+    }
+    if (message) {
+      toast.success(message)
+      dispatch(resetJobSlice())
+      dispatch(fetchMyJob())
+    }
+  }, [dispatch, error, message])
+
+  const handleDeleteJob = (id) => {
+    dispatch(deleteJob(id))
+  }
   return (
     <>
       {loading ? (
