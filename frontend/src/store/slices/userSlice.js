@@ -10,7 +10,7 @@ const userSlice = createSlice({
   name: "users",
   initialState: {
     loading: false,
-    isAuthenticated: false,
+    isAuthenticated: true,
     user: {},
     error: null,
     message: null,
@@ -80,7 +80,7 @@ const userSlice = createSlice({
     },
     fetchFailure(state, action) {
       state.loading = false
-      // state.isAuthenticated = false
+      state.isAuthenticated = false
       state.user = {}
       state.message = null
     },

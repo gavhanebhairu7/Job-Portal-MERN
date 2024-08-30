@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { clearAllJobErrors, postJob, resetJobSlice } from "../store/slices/jobSlices"
 import { CiCircleInfo } from "react-icons/ci"
+import Spinner from "./Spinner"
 
 const JobPost = () => {
   const [title, setTitle] = useState("")
@@ -56,6 +57,7 @@ const JobPost = () => {
 
   return (
     <div className="account_components">
+      {loading && <Spinner />}
       <h3>Post A Job</h3>
       <div>
         <label>Title</label>

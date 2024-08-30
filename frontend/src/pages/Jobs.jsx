@@ -34,7 +34,7 @@ export const Jobs = () => {
   useEffect(() => {
     if (error) {
       toast.error(error)
-      console.logO(error)
+      console.log(error)
       dispatch(clearAllJobErrors())
     }
     dispatch(fetchJob(city, niche, searchKeyword))

@@ -101,7 +101,7 @@ const appSlice = createSlice({
 })
 
 export const postApplication = (id, data) => async (dispatch) => {
-  dispatch(appSlice.actions.postAapplicationRequest)
+  dispatch(appSlice.actions.postAapplicationRequest())
   try {
     const server_response = await axios.post(`/application/apply/${id}`, data, {
       withCredentials: true,
