@@ -179,10 +179,9 @@ export const fetchSingleJob = (id) => async (dispatch) => {
       console.log("cannot send request")
       dispatch(jobSlice.actions.failureForSingleJob("failed to send request"))
     }
-    dispatch(jobSlice.actions.failureForSingleJob(err.response.data.message))
+    dispatch(jobSlice.actions.failureForSingleJob(err?.response?.data?.message || "failed to fetch details"))
     console.log("jobSlice:: fetchjob error:response ", err)
   }
-  dispatch(jobSlice.actions.clearAllError())
 }
 
 //get myposted job

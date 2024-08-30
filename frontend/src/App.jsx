@@ -64,8 +64,9 @@ const App = () => {
         </Routes>
         <Footer />
         <ToastContainer
-          position="top-right"
-          theme="colored"
+          position="top-left"
+          theme="dark"
+          autoClose={500}
         />
       </Router>
     </>

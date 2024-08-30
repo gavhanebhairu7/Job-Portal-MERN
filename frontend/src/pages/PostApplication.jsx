@@ -6,6 +6,7 @@ import { fetchSingleJob } from "../store/slices/jobSlices"
 import { Link } from "react-router-dom"
 import { clearAllAppErrors, postApplication, resetAppSlice } from "../store/slices/applicationSlice"
 import { toast } from "react-toastify"
+import Spinner from "../components/Spinner"
 export const PostApplication = () => {
   const { user, isAuthenticated } = useSelector((state) => state.users)
   const { error, message, loading } = useSelector((state) => state.applications)
@@ -28,6 +29,15 @@ export const PostApplication = () => {
     setUploaded(true)
   }
 
+  useEffect(() => {
+    setName(user?.name)
+    setAddress(user?.address)
+    setCoverLetter(user?.coverLetter)
+    setEmail(user?.email)
+    setPhone(user?.phone)
+    setResume(user?.resume?.url)
+  }, [user])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const formData = new FormData()
@@ -45,8 +55,11 @@ export const PostApplication = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       console.log("isauthentic: ", isAuthenticated)
-      toast.error("You are not authenticated, kindly login first !")
-      navigate("/login")
+      toast.warn("authentication failed,please login again")
+      setTimeout(() => {
+        navigate("/login")
+      }, 1500)
+      // navigate("/login")
       return
     }
     if (error) {
@@ -62,6 +75,7 @@ export const PostApplication = () => {
 
   return (
     <>
+      {loading && <Spinner />}
       <artical className="application_page">
         <form
           className="view_job_details"
@@ -131,6 +145,7 @@ export const PostApplication = () => {
             <button
               className="btn"
               type="submit"
+              disabled={loading}
               onClick={handleSubmit}>
               Save and Apply
             </button>

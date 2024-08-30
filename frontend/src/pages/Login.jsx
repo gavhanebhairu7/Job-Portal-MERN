@@ -14,6 +14,7 @@ export const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [role, setRole] = useState("Job Seeker")
+  const [init, setInit] = useState(false)
   const { error, user, loading, message, isAuthenticated } = useSelector((state) => state.users)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -21,21 +22,26 @@ export const Login = () => {
     if (error) {
       toast.error(error)
       console.log("error is being toasted")
-      dispatch(clearAllUserErrors)
+      dispatch(clearAllUserErrors())
       return
     }
     if (message) {
       console.log("message: ", message)
     }
-    if (isAuthenticated) {
+  }, [error, dispatch, message, loading])
+
+  useEffect(() => {
+    if (isAuthenticated && init) {
+      console.log(isAuthenticated)
       toast.success("login successful")
       navigate("/")
     }
-  }, [error, dispatch, isAuthenticated, message, loading])
+  }, [isAuthenticated])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     let data = { role, email: email.toLowerCase(), password }
+    setInit(true)
     dispatch(login(data))
   }
   return (
